@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/cms-api/:path*",
+      "destination": "https://data.cms.gov/:path*"
+    }
+  ]
+}
