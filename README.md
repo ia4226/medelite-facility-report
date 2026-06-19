@@ -1,16 +1,39 @@
-# React + Vite
+# Medelite Facility Assessment Report Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application that allows Medelite directors to instantly generate polished facility assessment reports by entering a CMS Certification Number (CCN).
 
-Currently, two official plugins are available:
+## Live Demo
+https://medelite-facility-report-eight.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- Dynamic CCN lookup via CMS Provider Data Catalog API
+- Auto-populates facility name, location, star ratings, and certified beds
+- Optional facility name override
+- Manual input fields for internal operational data (EMR, Census, Patient Type, Medelite history)
+- PDF export with clickable Medicare Care Compare source link
+- Word document (.docx) export
+- All 12 hospitalization/ED metrics (STR + LT) with national and state averages
+- Star rating visual cards
 
-## React Compiler
+## Tech Stack
+- React + Vite
+- Tailwind CSS
+- jsPDF (PDF generation)
+- docx + file-saver (Word export)
+- Axios (API requests)
+- Vercel (hosting + API proxy)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Running Locally
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Engineering Notes & Assumptions
+- The CMS Provider Data Catalog API is queried directly using the public REST endpoint (no API key required)
+- A Vercel rewrite proxy is used to handle CORS for the CMS API in production
+- National and state averages for hospitalization/ED metrics are sourced from the Kendall Lakes reference document provided by Medelite, as the CMS State/US Averages API endpoint returned inconsistent data during development. This is documented as a known assumption and can be replaced with a live API call once the correct endpoint is confirmed.
+- The "INFINITE" brand name is hardcoded per branding requirements and is never overwritten by facility data
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Test Case
+CCN: 686123 (Kendall Lakes Healthcare and Rehab Center, Miami FL)
